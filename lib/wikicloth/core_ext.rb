@@ -1,7 +1,7 @@
 begin
   require 'rinku'
 rescue LoadError
-  require 'twitter-text'
+  # require 'twitter-text'
   require 'nokogiri'
   require 'htmlentities'
 end
@@ -38,7 +38,8 @@ module ExtendedString
     def auto_link
       doc = Nokogiri::HTML::DocumentFragment.parse(to_s)
       doc.xpath(".//text()").each do |node|
-        autolink = Twitter::TwitterText::Autolink.auto_link_urls(node.to_s, :suppress_no_follow => true, :target_blank => false)
+        # autolink = Twitter::TwitterText::Autolink.auto_link_urls(node.to_s, :suppress_no_follow => true, :target_blank => false)
+        autolink = node.to_s
         autolink = HTMLEntities.new.decode(autolink) if node.parent.name == "pre"
         node.replace autolink
       end
